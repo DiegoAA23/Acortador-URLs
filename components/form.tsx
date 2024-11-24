@@ -23,7 +23,7 @@ export const UrlForm = () => {
           placeholder="URL"
           required
         />
-        <Button className="p-2 w-full">Acortar URL</Button>
+        <Button className="p-2 w-full">Acortar</Button>
       </div>
     </form>
   );

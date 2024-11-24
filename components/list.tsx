@@ -6,7 +6,7 @@ import { CopyIcon, EyeIcon } from "lucide-react";
 export const UrlList = () => {
   return (
     <div className="my-8">
-      <h3 className="text-2xl font-bold my-2 text-left">Recientes</h3>
+      <h3 className="text-2xl font-bold my-2 text-left">Recientes </h3>
       <ul className="space-y-2">
         <li className="flex items-center gap-3 p-4 bg-white rounded justify-between border-2 border-black">
           <Link href="" className="text-blue-600" target="_blank">

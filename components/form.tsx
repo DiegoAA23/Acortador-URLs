@@ -4,11 +4,16 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
-export const UrlForm = () => {
+interface ShortenFormProps {
+  handleUrlShort: () => void;
+}
+export const UrlForm = ({handleUrlShort}:ShortenFormProps) => {
   const [url, setUrl] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     //console.log(url);
 
     try{
@@ -21,11 +26,11 @@ export const UrlForm = () => {
       });
       await response.json();
       setUrl('');
-
+      handleUrlShort();
     }catch(e) {
       console.error('Error URL: ', e);
     }finally{
-
+      setIsLoading(false);
     }
   };
 
@@ -40,7 +45,9 @@ export const UrlForm = () => {
           placeholder="URL"
           required
         />
-        <Button className="p-2 w-full">Acortar</Button>
+        <Button className="p-2 w-full" type="submit" disabled={isLoading}>
+          {isLoading ? "Acortando.." : "Acortar"}
+        </Button>
       </div>
     </form>
   );

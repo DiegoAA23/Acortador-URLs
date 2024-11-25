@@ -5,11 +5,28 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
 export const UrlForm = () => {
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(url);
+    //console.log(url);
+
+    try{
+      const response = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({url})
+      });
+      await response.json();
+      setUrl('');
+
+    }catch(e) {
+      console.error('Error URL: ', e);
+    }finally{
+
+    }
   };
 
   return (

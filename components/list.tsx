@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { Button } from "./ui/button";
-import { CopyIcon, EyeIcon } from "lucide-react";
+import { Check, CheckCheckIcon, CopyIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 
 type Url = {
@@ -15,18 +15,36 @@ type Url = {
 
 export const UrlList = () => {
   const [urls, setUrls] = useState<Url[]>([]);
-  console.log(urls);
+  const [copied, setCopied] = useState<boolean>(false);
+  const [copyUrl, setCopyUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  //console.log(urls);
 
   const shortenedUrl = (code: string) =>
     `${process.env.NEXT_PUBLIC_BASE_URL}/${code}`;
 
+  const handleCopy = (code: string) => {
+    const fullUrl = `${shortenedUrl(code)}`;
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      setCopyUrl(code);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+        setCopyUrl('');
+       }, 2000);
+    });
+  };
+
   const fetchUrls = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch("/api/urls");
       const data = await response.json();
       setUrls(data);
     } catch (e) {
       console.error("Error fetch: " + e);
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -42,7 +60,7 @@ export const UrlList = () => {
           return (
             <li
               key={url.id}
-              className="flex items-center gap-3 p-4 bg-white rounded justify-between border-2 border-black"
+              className="flex items-center gap-3 p-4 justify-between bg-card rounded-md text-card-foreground border-2"
             >
               <Link
                 href={`/${url.shortUrl}`}
@@ -56,8 +74,13 @@ export const UrlList = () => {
                   variant="ghost"
                   size="icon"
                   className="text-muted-foreground hover:bg-muted"
+                  onClick={() => handleCopy(url.shortUrl)}
                 >
-                  <CopyIcon className="w-4 h-4" />
+                  {copied && copyUrl == url.shortUrl ? (
+                    <CheckCheckIcon className="w-4 h-4" />
+                  ) : (
+                    <CopyIcon className="w-4 h-4" />
+                  )}
                 </Button>
                 <span className="flex items-center gap-2">
                   <EyeIcon className="h-4 w-4" />

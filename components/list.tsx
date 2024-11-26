@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { Button } from "./ui/button";
-import { Check, CheckCheckIcon, CopyIcon, EyeIcon } from "lucide-react";
+import { CheckCheckIcon, CopyIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 
 type Url = {
@@ -17,7 +17,7 @@ export const UrlList = () => {
   const [urls, setUrls] = useState<Url[]>([]);
   const [copied, setCopied] = useState<boolean>(false);
   const [copyUrl, setCopyUrl] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+ // const [isLoading, setIsLoading] = useState<boolean>(false);
   //console.log(urls);
 
   const shortenedUrl = (code: string) =>
@@ -36,7 +36,7 @@ export const UrlList = () => {
   };
 
   const fetchUrls = async () => {
-    setIsLoading(true);
+    //setIsLoading(true);
     try {
       const response = await fetch("/api/urls");
       const data = await response.json();
@@ -44,7 +44,7 @@ export const UrlList = () => {
     } catch (e) {
       console.error("Error fetch: " + e);
     }finally{
-      setIsLoading(false);
+      //setIsLoading(false);
     }
   };
 

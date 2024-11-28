@@ -7,6 +7,42 @@ body {
   background-color: rgb(249, 249, 249);
 }
 
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.container {
+  padding: 1rem;
+}
+
+body.dark .container {
+  background-color: #333;
+  border: 1px solid #444;
+}
+
+body.dark input {
+  background-color: #333;
+  border: 1px solid #fcfcfc;
+}
+
+body.dark li {
+  background-color: #333;
+}
+
+body.dark button {
+  background-color: #333;
+  color: #ffffff;
+}
+
+body.dark button:hover {
+  background-color: #464646;
+}
+
+body.dark .text-blue-600 {
+  color: #a1cdff;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

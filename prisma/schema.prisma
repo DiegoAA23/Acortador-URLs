@@ -1,30 +1,16 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-datasource db {
- provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-//model Url {
-//  id          Int      @id @default(autoincrement())
-//  originalUrl String
-//  shortUrl    String   @unique
-//  createdAt   DateTime @default(now())
-//  visits      Int      @default(0)
-//}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-model Url {
+model url {
   id          Int      @id @default(autoincrement())
-  originalUrl String
-  shortUrl   String   @unique
-  createdAt   DateTime @default(now())
+  originalUrl String   @db.VarChar(191)
+  shortUrl    String   @unique(map: "Url_shortUrl_key") @db.VarChar(191)
+  createdAt   DateTime @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
   visits      Int      @default(0)
 }

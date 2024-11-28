@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 datasource db {
- provider = "postgresql"
+ provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -13,10 +13,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+//model Url {
+//  id          Int      @id @default(autoincrement())
+//  originalUrl String
+//  shortUrl    String   @unique
+//  createdAt   DateTime @default(now())
+//  visits      Int      @default(0)
+//}
+
 model Url {
   id          Int      @id @default(autoincrement())
   originalUrl String
-  shortUrl    String   @unique
+  shortUrl   String   @unique
   createdAt   DateTime @default(now())
   visits      Int      @default(0)
 }
